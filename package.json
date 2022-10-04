@@ -52,14 +52,13 @@
             "db": {
                 "kind": "sqlite",
                 "credentials": {
-                    "database": "sqlite.db"
+                    "database": "store.db"
                 }
             }
         }
     },
     "sapux": [
         "app/ui.loaded.cars",
-        "app/ui.goods",
         "app/ui.goods"
     ]
 }

@@ -1,75 +1,100 @@
 using StorehouseService as service from '../../srv/service';
 
 annotate service.Goods with @(
+
     UI.LineItem : [
         {
             $Type : 'UI.DataField',
-            Label : 'name',
             Value : name,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'status_ID',
             Value : status_ID,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'allowance_ID',
             Value : allowance_ID,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'quantity',
             Value : quantity,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'price',
             Value : price,
         },
-    ]
-);
-annotate service.Goods with @(
-    UI.FieldGroup #GeneratedGroup1 : {
-        $Type : 'UI.FieldGroupType',
-        Data : [
+    ],
+
+    UI          : {
+        SelectionFields                : [quantity],
+        Identification                 : [{Value : ID}],
+        HeaderInfo                     : {
+            TypeName       : 'Good',
+            TypeNamePlural : 'Goods',
+            Title          : {Value : name},
+            Description    : {Value : status_ID}
+        },
+        HeaderFacets                   : [{
+            $Type             : 'UI.ReferenceFacet',
+            Target            : '@UI.FieldGroup#Description',
+            ![@UI.Importance] : #High
+        }],
+        FieldGroup #Description        : {Data : [
             {
                 $Type : 'UI.DataField',
-                Label : 'name',
-                Value : name,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : 'status_ID',
-                Value : status_ID,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : 'allowance_ID',
-                Value : allowance_ID,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : 'quantity',
                 Value : quantity,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'price',
-                Value : price,
+                Value : status_ID,
             },
             {
                 $Type : 'UI.DataField',
-                Value : currency_code,
+                Value : quantity,
             },
-        ],
+            {
+                $Type : 'UI.DataField',
+                Value : allowance_ID,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : price,
+            },
+        ], },
+
+        FieldGroup #AdministrativeData : {Data : [
+            {
+                $Type : 'UI.DataField',
+                Value : createdBy
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : createdAt
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : modifiedBy
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : modifiedAt
+            }
+        ]},
     },
-    UI.Facets : [
-        {
-            $Type : 'UI.ReferenceFacet',
-            ID : 'GeneratedFacet1',
-            Label : 'General Information',
-            Target : '@UI.FieldGroup#GeneratedGroup1',
-        },
-    ]
+    UI.Facets   : [{
+        $Type  : 'UI.CollectionFacet',
+        ID     : 'POAdmininfo',
+        Label  : '{i18n>adminInfo}',
+        Facets : [{
+            $Type  : 'UI.ReferenceFacet',
+            Label  : '{i18n>admininfo}',
+            Target : '@UI.FieldGroup#AdministrativeData'
+        }]
+    }]
 );
+
+
+using from './label';
+using from './capabilities';
+using from './field-control';
+using from './value-helps';

@@ -32,16 +32,16 @@ annotate service.Cars with @(
                 ![@UI.Importance] : #High 
             },
             
-            // {
-            //     $Type             : 'UI.DataField',
-            //     Value             : good.ID ,
-            //     ![@UI.Importance] : #High
-            // },
-            // {
-            //     $Type             : 'UI.DataField',
-            //     Value             : good.price,
-            //     ![@UI.Importance] : #High
-            // }
+            {
+                $Type             : 'UI.DataField',
+                Value             : good.name ,
+                ![@UI.Importance] : #High
+            },
+            {
+                $Type             : 'UI.DataField',
+                Value             : good.price,
+                ![@UI.Importance] : #High
+            }
         ],
         PresentationVariant : {SortOrder : [{
             $Type      : 'Common.SortOrderType',
@@ -71,14 +71,14 @@ annotate service.Cars with @(
                 Value       : status_ID,
                 Criticality : status.criticality,
             },
-            // {
-            //     $Type : 'UI.DataField',
-            //     Value : good.name,
-            // },
-            // {
-            //     $Type : 'UI.DataField',
-            //     Value : good.price,
-            // }
+            {
+                $Type : 'UI.DataField',
+                Value : good.name,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : good.price,
+            }
         ]},
         FieldGroup #AdministrativeData : {Data : [
             {
