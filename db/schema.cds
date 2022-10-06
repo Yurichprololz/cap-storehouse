@@ -7,9 +7,10 @@ using {
 using {masterData} from './master-data';
 
 
-entity Cars : managed{
+entity Cars : managed {
     key ID            : UUID;
         driverSurname : String;
+        carName       : String;
         status        : Association to masterData.Statuses;
         good          : Association to Goods;
 }

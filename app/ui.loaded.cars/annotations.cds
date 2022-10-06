@@ -12,17 +12,7 @@ annotate service.Cars with @(
             },
             {
                 $Type             : 'UI.DataField',
-                Value             : driverSurname,
-                ![@UI.Importance] : #High
-            },
-            {
-                $Type             : 'UI.DataField',
-                Value             : driverSurname,
-                ![@UI.Importance] : #High
-            },
-            {
-                $Type             : 'UI.DataField',
-                Value             : driverSurname,
+                Value             : carName,
                 ![@UI.Importance] : #High
             },
             {
@@ -65,6 +55,10 @@ annotate service.Cars with @(
             {
                 $Type : 'UI.DataField',
                 Value : driverSurname,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : carName,
             },
             {
                 $Type       : 'UI.DataField',
