@@ -13,7 +13,7 @@
         "sourceTemplate": {
             "id": "@sap/generator-fiori:lrop",
             "version": "1.7.5",
-            "toolsId": "125c7df0-eac9-4bd5-b95e-66a33221091f"
+            "toolsId": "35b9b5fc-4e7c-4446-bf70-6228acd3afa2"
         },
         "dataSources": {
             "mainService": {
@@ -42,7 +42,7 @@
                         "parameters": {},
                         "additionalParameters": "allowed"
                     },
-                    "semanticObject": "Loading area",
+                    "semanticObject": "Car",
                     "action": "manage",
                     "title": "{{flpTitle}}",
                     "subTitle": "{{flpSubtitle}}",
@@ -157,5 +157,9 @@
     "sap.fiori": {
         "registrationIds": [],
         "archeType": "transactional"
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "soterehouse-approuter"
     }
 }

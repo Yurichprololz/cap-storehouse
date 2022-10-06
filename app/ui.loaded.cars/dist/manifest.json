@@ -1,7 +1,7 @@
 {
     "_version": "1.42.0",
     "sap.app": {
-        "id": "ui.goods",
+        "id": "ui.loaded.cars",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "applicationVersion": {
@@ -13,11 +13,11 @@
         "sourceTemplate": {
             "id": "@sap/generator-fiori:lrop",
             "version": "1.7.5",
-            "toolsId": "c861e50d-4132-4689-a48b-05d5a4097cb0"
+            "toolsId": "35b9b5fc-4e7c-4446-bf70-6228acd3afa2"
         },
         "dataSources": {
             "mainService": {
-                "uri": "/storehouse/",
+                "uri": "storehouse/",
                 "type": "OData",
                 "settings": {
                     "annotations": [
@@ -37,12 +37,12 @@
         },
         "crossNavigation": {
             "inbounds": {
-                "ui-goods-inbound": {
+                "ui-loaded-cars-inbound": {
                     "signature": {
                         "parameters": {},
                         "additionalParameters": "allowed"
                     },
-                    "semanticObject": "Good",
+                    "semanticObject": "Car",
                     "action": "manage",
                     "title": "{{flpTitle}}",
                     "subTitle": "{{flpSubtitle}}",
@@ -86,7 +86,7 @@
             "i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {
-                    "bundleName": "ui.goods.i18n.i18n"
+                    "bundleName": "ui.loaded.cars.i18n.i18n"
                 }
             },
             "": {
@@ -112,42 +112,42 @@
             "routes": [
                 {
                     "pattern": ":?query:",
-                    "name": "GoodsList",
-                    "target": "GoodsList"
+                    "name": "CarsList",
+                    "target": "CarsList"
                 },
                 {
-                    "pattern": "Goods({key}):?query:",
-                    "name": "GoodsObjectPage",
-                    "target": "GoodsObjectPage"
+                    "pattern": "Cars({key}):?query:",
+                    "name": "CarsObjectPage",
+                    "target": "CarsObjectPage"
                 }
             ],
             "targets": {
-                "GoodsList": {
+                "CarsList": {
                     "type": "Component",
-                    "id": "GoodsList",
+                    "id": "CarsList",
                     "name": "sap.fe.templates.ListReport",
                     "options": {
                         "settings": {
-                            "entitySet": "Goods",
+                            "entitySet": "Cars",
                             "variantManagement": "Page",
                             "navigation": {
-                                "Goods": {
+                                "Cars": {
                                     "detail": {
-                                        "route": "GoodsObjectPage"
+                                        "route": "CarsObjectPage"
                                     }
                                 }
                             }
                         }
                     }
                 },
-                "GoodsObjectPage": {
+                "CarsObjectPage": {
                     "type": "Component",
-                    "id": "GoodsObjectPage",
+                    "id": "CarsObjectPage",
                     "name": "sap.fe.templates.ObjectPage",
                     "options": {
                         "settings": {
                             "editableHeaderContent": false,
-                            "entitySet": "Goods"
+                            "entitySet": "Cars"
                         }
                     }
                 }

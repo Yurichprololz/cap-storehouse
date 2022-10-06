@@ -7,7 +7,8 @@
     "private": true,
     "dependencies": {
         "@sap/cds": ">=5",
-        "express": "^4"
+        "express": "^4",
+        "hdb": "^0.19.0"
     },
     "devDependencies": {
         "@sap/ux-specification": "^1.102.9",
@@ -50,9 +51,17 @@
     "cds": {
         "requires": {
             "db": {
-                "kind": "sqlite",
+                "kind": "hana-cloud"
+            },
+            "CPIDestination": {
+                "kind": "rest",
                 "credentials": {
-                    "database": "store.db"
+                    "destination": "CPI_DESTINATION"
+                }
+            },
+            "[hybrid]": {
+                "db": {
+                    "kind": "hana-cloud"
                 }
             }
         }

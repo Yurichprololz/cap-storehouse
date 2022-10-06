@@ -6,6 +6,8 @@ modules:
 - name: cap-storehouse-srv
   type: nodejs
   path: gen/srv
+  requires:
+  - name: cap-storehouse-db
   provides:
   - name: srv-api
     properties:
@@ -52,6 +54,50 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
+- name: cap-storehouse-db-deployer
+  type: hdb
+  path: db
+  requires:
+  - name: cap-storehouse-db
+  parameters:
+    buildpack: nodejs_buildpack
+- name: cap-storehouse-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: cap-storehouse-destination-service
+    parameters:
+      content-target: true
+  - name: cap-storehouse-repo-host
+    parameters:
+      service-key:
+        name: cap-storehouse-repo-host-key
+  - name: uaa_cap-storehouse
+    parameters:
+      service-key:
+        name: uaa_cap-storehouse-key
+  - name: srv-api
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Authentication: OAuth2UserTokenExchange
+          Name: storehouse-app-srv
+          TokenServiceInstanceName: cap-storehouse-xsuaa-service
+          TokenServiceKeyName: uaa_cap-storehouse-key
+          URL: ~{srv-api/srv-url}
+          sap.cloud.service: soterehouse-approuter
+        - Name: soterehouse_approuter_cap_storehouse_repo_host
+          ServiceInstanceName: cap-storehouse-html5-srv
+          ServiceKeyName: cap-storehouse-repo-host-key
+          sap.cloud.service: soterehouse-approuter
+        - Authentication: OAuth2UserTokenExchange
+          Name: soterehouse_approuter_uaa_cap_storehouse
+          ServiceInstanceName: cap-storehouse-xsuaa-service
+          ServiceKeyName: uaa_cap-storehouse-key
+          sap.cloud.service: soterehouse-approuter
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
 resources:
 - name: cap-storehouse-repo-host
   type: org.cloudfoundry.managed-service
@@ -63,7 +109,7 @@ resources:
   type: org.cloudfoundry.managed-service
   parameters:
     config:
-      HTML5Runtime_enabled: false
+      HTML5Runtime_enabled: true
       init_data:
         instance:
           destinations:
@@ -77,6 +123,18 @@ resources:
     service: destination
     service-name: cap-storehouse-destination-service
     service-plan: lite
+- name: cap-storehouse-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+- name: uaa_cap-storehouse
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: cap-storehouse-xsuaa-service
+    service-plan: application
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true

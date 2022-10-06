@@ -18,10 +18,12 @@
                 </EntitySet>
                 <EntitySet Name="Goods" EntityType="StorehouseService.Goods">
                     <NavigationPropertyBinding Path="status" Target="GoodStatuses"/>
+                    <NavigationPropertyBinding Path="allowance" Target="Allowance"/>
                     <NavigationPropertyBinding Path="currency" Target="Currencies"/>
                 </EntitySet>
                 <EntitySet Name="Statuses" EntityType="StorehouseService.Statuses"/>
                 <EntitySet Name="GoodStatuses" EntityType="StorehouseService.GoodStatuses"/>
+                <EntitySet Name="Allowance" EntityType="StorehouseService.Allowance"/>
                 <EntitySet Name="Currencies" EntityType="StorehouseService.Currencies">
                     <NavigationPropertyBinding Path="texts" Target="Currencies_texts"/>
                     <NavigationPropertyBinding Path="localized" Target="Currencies_texts"/>
@@ -29,21 +31,42 @@
                 <EntitySet Name="Currencies_texts" EntityType="StorehouseService.Currencies_texts"/>
             </EntityContainer>
             <EntityType Name="Cars">
-                <Property Name="id" Type="Edm.Guid"/>
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
                 <Property Name="driverSurname" Type="Edm.String"/>
                 <NavigationProperty Name="status" Type="StorehouseService.Statuses">
                     <ReferentialConstraint Property="status_ID" ReferencedProperty="ID"/>
                 </NavigationProperty>
                 <Property Name="status_ID" Type="Edm.String"/>
-                <NavigationProperty Name="good" Type="StorehouseService.Goods"/>
+                <NavigationProperty Name="good" Type="StorehouseService.Goods">
+                    <ReferentialConstraint Property="good_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="good_ID" Type="Edm.Guid"/>
             </EntityType>
             <EntityType Name="Goods">
-                <Property Name="id" Type="Edm.Guid"/>
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
                 <Property Name="name" Type="Edm.String"/>
                 <NavigationProperty Name="status" Type="StorehouseService.GoodStatuses">
                     <ReferentialConstraint Property="status_ID" ReferencedProperty="ID"/>
                 </NavigationProperty>
                 <Property Name="status_ID" Type="Edm.String"/>
+                <NavigationProperty Name="allowance" Type="StorehouseService.Allowance">
+                    <ReferentialConstraint Property="allowance_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="allowance_ID" Type="Edm.String"/>
                 <Property Name="quantity" Type="Edm.Int32"/>
                 <Property Name="price" Type="Edm.Decimal" Scale="2" Precision="15"/>
                 <NavigationProperty Name="currency" Type="StorehouseService.Currencies">
@@ -66,6 +89,13 @@
                 <Property Name="ID" Type="Edm.String" Nullable="false"/>
                 <Property Name="name" Type="Edm.String" MaxLength="20"/>
                 <Property Name="criticality" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="Allowance">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" MaxLength="20"/>
             </EntityType>
             <EntityType Name="Currencies">
                 <Key>
@@ -95,66 +125,114 @@
                 <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
                 <Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
             </EntityType>
-            <Annotations Target="StorehouseService.Goods/currency">
-                <Annotation Term="Common.Label" String="{i18n>Currency}"/>
-                    <Annotation Term="Core.Description" String="{i18n>CurrencyCode.Description}"/>
-                    </Annotations>
-                    <Annotations Target="StorehouseService.Goods/currency_code">
-                        <Annotation Term="Common.Label" String="{i18n>Currency}"/>
-                            <Annotation Term="Common.ValueList">
-                                <Record Type="Common.ValueListType">
-                                    <PropertyValue Property="Label" String="{i18n>Currency}"/>
-                                        <PropertyValue Property="CollectionPath" String="Currencies"/>
-                                        <PropertyValue Property="Parameters">
-                                            <Collection>
-                                                <Record Type="Common.ValueListParameterInOut">
-                                                    <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
-                                                    <PropertyValue Property="ValueListProperty" String="code"/>
-                                                </Record>
-                                                <Record Type="Common.ValueListParameterDisplayOnly">
-                                                    <PropertyValue Property="ValueListProperty" String="name"/>
-                                                </Record>
-                                            </Collection>
-                                        </PropertyValue>
-                                    </Record>
-                                </Annotation>
-                                <Annotation Term="Core.Description" String="{i18n>CurrencyCode.Description}"/>
-                                </Annotations>
-                                <Annotations Target="StorehouseService.Currencies">
-                                    <Annotation Term="UI.Identification">
-                                        <Collection>
-                                            <Record Type="UI.DataField">
-                                                <PropertyValue Property="Value" Path="name"/>
-                                            </Record>
-                                        </Collection>
-                                    </Annotation>
-                                </Annotations>
-                                <Annotations Target="StorehouseService.Currencies/name">
-                                    <Annotation Term="Common.Label" String="{i18n>Name}"/>
+            <Annotations Target="StorehouseService.Cars/createdAt">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                </Annotations>
+                <Annotations Target="StorehouseService.Cars/createdBy">
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="Core.Immutable" Bool="true"/>
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                        </Annotations>
+                        <Annotations Target="StorehouseService.Cars/modifiedAt">
+                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                            <Annotation Term="Core.Computed" Bool="true"/>
+                            <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                            </Annotations>
+                            <Annotations Target="StorehouseService.Cars/modifiedBy">
+                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                <Annotation Term="Core.Computed" Bool="true"/>
+                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                    <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
                                     </Annotations>
-                                    <Annotations Target="StorehouseService.Currencies/descr">
-                                        <Annotation Term="Common.Label" String="{i18n>Description}"/>
+                                    <Annotations Target="StorehouseService.Goods/createdAt">
+                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                        <Annotation Term="Core.Immutable" Bool="true"/>
+                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
                                         </Annotations>
-                                        <Annotations Target="StorehouseService.Currencies/code">
-                                            <Annotation Term="Common.Text" Path="name"/>
-                                            <Annotation Term="Common.Label" String="{i18n>CurrencyCode}"/>
-                                            </Annotations>
-                                            <Annotations Target="StorehouseService.Currencies/symbol">
-                                                <Annotation Term="Common.Label" String="{i18n>CurrencySymbol}"/>
+                                        <Annotations Target="StorehouseService.Goods/createdBy">
+                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                            <Annotation Term="Core.Immutable" Bool="true"/>
+                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                            <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
                                                 </Annotations>
-                                                <Annotations Target="StorehouseService.Currencies_texts/locale">
-                                                    <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+                                                <Annotations Target="StorehouseService.Goods/modifiedAt">
+                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                    <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
                                                     </Annotations>
-                                                    <Annotations Target="StorehouseService.Currencies_texts/name">
-                                                        <Annotation Term="Common.Label" String="{i18n>Name}"/>
-                                                        </Annotations>
-                                                        <Annotations Target="StorehouseService.Currencies_texts/descr">
-                                                            <Annotation Term="Common.Label" String="{i18n>Description}"/>
+                                                    <Annotations Target="StorehouseService.Goods/modifiedBy">
+                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                            <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
                                                             </Annotations>
-                                                            <Annotations Target="StorehouseService.Currencies_texts/code">
-                                                                <Annotation Term="Common.Text" Path="name"/>
-                                                                <Annotation Term="Common.Label" String="{i18n>CurrencyCode}"/>
-                                                                </Annotations>
-                                                            </Schema>
-                                                        </edmx:DataServices>
-                                                    </edmx:Edmx>
+                                                            <Annotations Target="StorehouseService.Goods/currency">
+                                                                <Annotation Term="Common.Label" String="{i18n>Currency}"/>
+                                                                    <Annotation Term="Core.Description" String="{i18n>CurrencyCode.Description}"/>
+                                                                    </Annotations>
+                                                                    <Annotations Target="StorehouseService.Goods/currency_code">
+                                                                        <Annotation Term="Common.Label" String="{i18n>Currency}"/>
+                                                                            <Annotation Term="Common.ValueList">
+                                                                                <Record Type="Common.ValueListType">
+                                                                                    <PropertyValue Property="Label" String="{i18n>Currency}"/>
+                                                                                        <PropertyValue Property="CollectionPath" String="Currencies"/>
+                                                                                        <PropertyValue Property="Parameters">
+                                                                                            <Collection>
+                                                                                                <Record Type="Common.ValueListParameterInOut">
+                                                                                                    <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+                                                                                                    <PropertyValue Property="ValueListProperty" String="code"/>
+                                                                                                </Record>
+                                                                                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                                                                                    <PropertyValue Property="ValueListProperty" String="name"/>
+                                                                                                </Record>
+                                                                                            </Collection>
+                                                                                        </PropertyValue>
+                                                                                    </Record>
+                                                                                </Annotation>
+                                                                                <Annotation Term="Core.Description" String="{i18n>CurrencyCode.Description}"/>
+                                                                                </Annotations>
+                                                                                <Annotations Target="StorehouseService.Currencies">
+                                                                                    <Annotation Term="UI.Identification">
+                                                                                        <Collection>
+                                                                                            <Record Type="UI.DataField">
+                                                                                                <PropertyValue Property="Value" Path="name"/>
+                                                                                            </Record>
+                                                                                        </Collection>
+                                                                                    </Annotation>
+                                                                                </Annotations>
+                                                                                <Annotations Target="StorehouseService.Currencies/name">
+                                                                                    <Annotation Term="Common.Label" String="{i18n>Name}"/>
+                                                                                    </Annotations>
+                                                                                    <Annotations Target="StorehouseService.Currencies/descr">
+                                                                                        <Annotation Term="Common.Label" String="{i18n>Description}"/>
+                                                                                        </Annotations>
+                                                                                        <Annotations Target="StorehouseService.Currencies/code">
+                                                                                            <Annotation Term="Common.Text" Path="name"/>
+                                                                                            <Annotation Term="Common.Label" String="{i18n>CurrencyCode}"/>
+                                                                                            </Annotations>
+                                                                                            <Annotations Target="StorehouseService.Currencies/symbol">
+                                                                                                <Annotation Term="Common.Label" String="{i18n>CurrencySymbol}"/>
+                                                                                                </Annotations>
+                                                                                                <Annotations Target="StorehouseService.Currencies_texts/locale">
+                                                                                                    <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+                                                                                                    </Annotations>
+                                                                                                    <Annotations Target="StorehouseService.Currencies_texts/name">
+                                                                                                        <Annotation Term="Common.Label" String="{i18n>Name}"/>
+                                                                                                        </Annotations>
+                                                                                                        <Annotations Target="StorehouseService.Currencies_texts/descr">
+                                                                                                            <Annotation Term="Common.Label" String="{i18n>Description}"/>
+                                                                                                            </Annotations>
+                                                                                                            <Annotations Target="StorehouseService.Currencies_texts/code">
+                                                                                                                <Annotation Term="Common.Text" Path="name"/>
+                                                                                                                <Annotation Term="Common.Label" String="{i18n>CurrencyCode}"/>
+                                                                                                                </Annotations>
+                                                                                                            </Schema>
+                                                                                                        </edmx:DataServices>
+                                                                                                    </edmx:Edmx>
