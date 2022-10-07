@@ -1,7 +1,7 @@
 using StorehouseService as service from '../../srv/service';
 
 annotate service.Goods with @(
-
+    
     UI.LineItem : [
         {
             $Type : 'UI.DataField',
@@ -27,7 +27,14 @@ annotate service.Goods with @(
 
     UI          : {
         SelectionFields                : [quantity],
-        Identification                 : [{Value : ID}],
+        Identification                 : [
+            {Value : ID},
+            {
+                $Type  : 'UI.DataFieldForAction',
+                Action : 'StorehouseService.loadCar',
+                Label  : '{i18n>sendBook}'
+            }
+        ],
         HeaderInfo                     : {
             TypeName       : 'Good',
             TypeNamePlural : 'Goods',
