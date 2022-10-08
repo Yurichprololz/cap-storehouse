@@ -1,73 +1,77 @@
 {
-    "name": "cap-storehouse",
-    "version": "1.0.0",
-    "description": "A simple CAP project.",
-    "repository": "https://github.com/Yurichprololz/cap-storehouse.git",
-    "license": "UNLICENSED",
-    "private": true,
-    "dependencies": {
-        "@sap/cds": ">=5",
-        "express": "^4",
-        "hdb": "^0.19.0"
+  "name": "cap-storehouse",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "https://github.com/Yurichprololz/cap-storehouse.git",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": ">=5",
+    "express": "^4",
+    "hdb": "^0.19.0"
+  },
+  "devDependencies": {
+    "@sap/ux-specification": "^1.102.9",
+    "rimraf": "^3.0.2",
+    "sqlite3": "^5.0.4"
+  },
+  "scripts": {
+    "dev": "cds watch --profile hybrid",
+    "start": "cds run",
+    "watch-ui.loaded.cars": "cds watch --open ui.loaded.cars/webapp/index.html?sap-ui-xx-viewCache=false",
+    "undeploy": "cf undeploy cap-storehouse --delete-services --delete-service-keys --delete-service-brokers",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+    "watch-ui.goods": "cds watch --open ui.goods/webapp/index.html?sap-ui-xx-viewCache=false"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "env": {
+      "es2020": true,
+      "node": true,
+      "jest": true,
+      "mocha": true
     },
-    "devDependencies": {
-        "@sap/ux-specification": "^1.102.9",
-        "rimraf": "^3.0.2",
-        "sqlite3": "^5.0.4"
+    "globals": {
+      "SELECT": true,
+      "INSERT": true,
+      "UPDATE": true,
+      "DELETE": true,
+      "CREATE": true,
+      "DROP": true,
+      "CDL": true,
+      "CQL": true,
+      "CXL": true,
+      "cds": true
     },
-    "scripts": {
-        "start": "cds run",
-        "watch-ui.loaded.cars": "cds watch --open ui.loaded.cars/webapp/index.html?sap-ui-xx-viewCache=false",
-        "undeploy": "cf undeploy cap-storehouse --delete-services --delete-service-keys --delete-service-brokers",
-        "build": "rimraf resources mta_archives && mbt build --mtar archive",
-        "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
-        "watch-ui.goods": "cds watch --open ui.goods/webapp/index.html?sap-ui-xx-viewCache=false"
-    },
-    "eslintConfig": {
-        "extends": "eslint:recommended",
-        "env": {
-            "es2020": true,
-            "node": true,
-            "jest": true,
-            "mocha": true
-        },
-        "globals": {
-            "SELECT": true,
-            "INSERT": true,
-            "UPDATE": true,
-            "DELETE": true,
-            "CREATE": true,
-            "DROP": true,
-            "CDL": true,
-            "CQL": true,
-            "CXL": true,
-            "cds": true
-        },
-        "rules": {
-            "no-console": "off",
-            "require-atomic-updates": "off"
+    "rules": {
+      "no-console": "off",
+      "require-atomic-updates": "off"
+    }
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "HANA",
+        "credentials": {
+          "database": "cap-storehouse-db"
         }
-    },
-    "cds": {
-        "requires": {
-            "db": {
-                "kind": "hana-cloud"
-            },
-            "CPIDestination": {
-                "kind": "rest",
-                "credentials": {
-                    "destination": "CPI_DESTINATION"
-                }
-            },
-            "[hybrid]": {
-                "db": {
-                    "kind": "hana-cloud"
-                }
-            }
+      },
+      "CPIDestination": {
+        "kind": "rest",
+        "credentials": {
+          "destination": "CPI_DESTINATION"
         }
-    },
-    "sapux": [
-        "app/ui.loaded.cars",
-        "app/ui.goods"
-    ]
+      },
+      "[hybrid]": {
+        "db": {
+          "kind": "hana-cloud"
+        }
+      }
+    }
+  },
+  "sapux": [
+    "app/ui.loaded.cars",
+    "app/ui.goods"
+  ]
 }

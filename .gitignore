@@ -33,3 +33,4 @@ mta_archives/
 db/.env
 resources/
 app/**/dist
+cdsrc-private.json

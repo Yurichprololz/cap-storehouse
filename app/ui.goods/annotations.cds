@@ -32,7 +32,7 @@ annotate service.Goods with @(
             {
                 $Type  : 'UI.DataFieldForAction',
                 Action : 'StorehouseService.loadCar',
-                Label  : '{i18n>sendBook}'
+                Label  : '{i18n>loadCar}'
             }
         ],
         HeaderInfo                     : {

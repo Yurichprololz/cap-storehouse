@@ -3,7 +3,12 @@ using StorehouseService as service from '../../srv/service';
 annotate service.Cars with @(
     UI        : {
         SelectionFields     : [driverSurname],
-        Identification      : [{Value : ID}],
+        Identification      : [{Value : ID},
+            {
+                $Type  : 'UI.DataFieldForAction',
+                Action : 'StorehouseService.sendCar',
+                Label  : '{i18n>sendCar}'
+            }],
         LineItem            : [
             {
                 $Type             : 'UI.DataField',
