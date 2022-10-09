@@ -6,9 +6,12 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@sap-cloud-sdk/http-client": "^2.9.0",
     "@sap/cds": ">=5",
+    "@sap/xssec": "^3.2.13",
     "express": "^4",
-    "hdb": "^0.19.0"
+    "hdb": "^0.19.0",
+    "passport": "^0.6.0"
   },
   "devDependencies": {
     "@sap/ux-specification": "^1.102.9",
@@ -52,10 +55,7 @@
   "cds": {
     "requires": {
       "db": {
-        "kind": "HANA",
-        "credentials": {
-          "database": "cap-storehouse-db"
-        }
+        "kind": "hana-cloud"
       },
       "CPIDestination": {
         "kind": "rest",

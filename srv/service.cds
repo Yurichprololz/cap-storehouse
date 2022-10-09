@@ -4,12 +4,12 @@ using {masterData} from '../db/master-data';
 
 service StorehouseService {
     entity Cars         as projection on storehouse.Cars actions {
-        @Core.OperationAvailable : {$value : in.sendCarEnabled}
+        // @Core.OperationAvailable : {$value : in.sendCarEnabled}
         action sendCar();
     };
 
-    entity Goods        as projection on storehouse.Goods actions {
-        @Core.OperationAvailable :                    {$value : in.loadCarEnabled}
+    entity Goods as projection on storehouse.Goods actions {
+        // @Core.OperationAvailable : in.loadCarEnabled
         action loadCar(car : UUID @Common.ValueList : {
             CollectionPath  : 'Cars',
             Label           : '',

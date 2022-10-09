@@ -7,5 +7,5 @@ annotate StorehouseService.Goods with {
     price     @mandatory;
     currency  @mandatory;
     status    @readonly;
-    allowance @readonly;
+    allowance @mandatory;
 };

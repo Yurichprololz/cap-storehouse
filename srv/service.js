@@ -1,6 +1,6 @@
 const cds = require('@sap/cds');
 const constansts = require('./constants')
-const cpi = require('./senCar.cpi')
+const cpi = require('./sendCar.cpi')
 
 module.exports = cds.service.impl(async function () {
 
@@ -8,6 +8,9 @@ module.exports = cds.service.impl(async function () {
 
     this.before('NEW', 'Cars', async (req) => {
         req.data.ID = '1';
+    });
+    this.before('NEW', 'Goods', (req) => {
+        req.data.status_ID = '2';
     });
 
     this.on('loadCar', 'Goods', async (req) => {
@@ -25,16 +28,25 @@ module.exports = cds.service.impl(async function () {
 
     this.on('sendCar', 'Cars', cpi.sendCar);
 
-    this.after('READ', 'Goods', async (each) => {
-        if (each.status_ID === '1') {
-            each.loadCarEnabled = true
-        }
-    })
-    this.after('READ', 'Cars', async (each) => {
-        if (each.status_ID === '2') {
-            each.sendCarEnabled = true
-        }
-    })
+    // this.after('READ', 'Goods', (each) => {
+    //     console.log(each)
+    //     if (each.status_ID == '1') {
+    //         console.log('enable')
+    //         each.loadCarEnabled = true
+    //     }
+    // })
+    // this.after('READ', 'Goods', (each) => {
+    //     if (each.status_ID == '1') {
+    //         each.loadCarEnabled = true;
+    //     }
+    // })
+
+
+    // this.after('READ', 'Cars', (each) => {
+    //     if (each.status_ID === '2') {
+    //         each.sendCarEnabled = true
+    //     }
+    // })
 
 })
 
