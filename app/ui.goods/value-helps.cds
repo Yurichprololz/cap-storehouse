@@ -53,7 +53,7 @@ annotate storehouse.Goods {
             {
                 $Type             : 'Common.ValueListParameterInOut',
                 LocalDataProperty : allowance_ID,
-                ValueListProperty : 'code'
+                ValueListProperty : 'ID'
             },
             {
                 $Type             : 'Common.ValueListParameterDisplayOnly',

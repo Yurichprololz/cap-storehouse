@@ -13,6 +13,7 @@ entity Cars : managed {
         carName                : String;
         status                 : Association to masterData.Statuses;
         good                   : Association to Goods;
+        virtual sendCarEnabled : Boolean;
 
 }
 
@@ -24,4 +25,5 @@ entity Goods : managed {
         quantity               : Integer;
         price                  : Decimal(15, 2);
         currency               : Currency;
+        virtual loadCarEnabled : Boolean;
 }

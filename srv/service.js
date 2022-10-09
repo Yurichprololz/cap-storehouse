@@ -10,7 +10,7 @@ module.exports = cds.service.impl(async function () {
         req.data.ID = '1';
     });
     this.before('NEW', 'Goods', (req) => {
-        req.data.status_ID = '2';
+        req.data.status_ID = '1';
     });
 
     this.on('loadCar', 'Goods', async (req) => {
@@ -28,25 +28,18 @@ module.exports = cds.service.impl(async function () {
 
     this.on('sendCar', 'Cars', cpi.sendCar);
 
-    // this.after('READ', 'Goods', (each) => {
-    //     console.log(each)
-    //     if (each.status_ID == '1') {
-    //         console.log('enable')
-    //         each.loadCarEnabled = true
-    //     }
-    // })
-    // this.after('READ', 'Goods', (each) => {
-    //     if (each.status_ID == '1') {
-    //         each.loadCarEnabled = true;
-    //     }
-    // })
+    this.after('READ', 'Goods', (each) => {
+        if (each.status_ID == '1' || each?.status?.ID == '1') {
+            each.loadCarEnabled = true;
+        }
+    })
 
 
-    // this.after('READ', 'Cars', (each) => {
-    //     if (each.status_ID === '2') {
-    //         each.sendCarEnabled = true
-    //     }
-    // })
+    this.after('READ', 'Cars', (each) => {
+        if (each.status_ID === '2') {
+            each.sendCarEnabled = true
+        }
+    })
 
 })
 

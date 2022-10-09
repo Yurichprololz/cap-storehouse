@@ -1,33 +1,9 @@
 using StorehouseService as service from '../../srv/service';
 
 annotate service.Goods with @(
-    
-    UI.LineItem : [
-        {
-            $Type : 'UI.DataField',
-            Value : name,
-        },
-        {
-            $Type : 'UI.DataField',
-            Value : status_ID,
-        },
-        {
-            $Type : 'UI.DataField',
-            Value : allowance_ID,
-        },
-        {
-            $Type : 'UI.DataField',
-            Value : quantity,
-        },
-        {
-            $Type : 'UI.DataField',
-            Value : price,
-        },
-    ],
-
-    UI          : {
-        SelectionFields                : [quantity],
-        Identification                 : [
+    UI        : {
+        SelectionFields     : [name],
+        Identification      : [
             {Value : ID},
             {
                 $Type  : 'UI.DataFieldForAction',
@@ -35,6 +11,36 @@ annotate service.Goods with @(
                 Label  : '{i18n>loadCar}'
             }
         ],
+        LineItem            : [
+            {
+                $Type             : 'UI.DataField',
+                Value             : name,
+                ![@UI.Importance] : #High
+            },
+            {
+                $Type             : 'UI.DataField',
+                Value             : status_ID,
+                Criticality       : status.criticality,
+                ![@UI.Importance] : #High
+            },
+            {
+                $Type             : 'UI.DataField',
+                Value             : price,
+                ![@UI.Importance] : #High
+            },
+            {
+                $Type             : 'UI.DataField',
+                Value             : allowance_ID,
+                ![@UI.Importance] : #High
+            },
+        ],
+        PresentationVariant : {SortOrder : [{
+            $Type      : 'Common.SortOrderType',
+            Property   : name,
+            Descending : false
+        }]},
+    },
+    UI        : {
         HeaderInfo                     : {
             TypeName       : 'Good',
             TypeNamePlural : 'Goods',
@@ -48,27 +54,50 @@ annotate service.Goods with @(
         }],
         FieldGroup #Description        : {Data : [
             {
-                $Type : 'UI.DataField',
-                Value : quantity,
+                $Type             : 'UI.DataField',
+                Value             : name,
+                ![@UI.Importance] : #High
             },
             {
-                $Type : 'UI.DataField',
-                Value : status_ID,
+                $Type             : 'UI.DataField',
+                Value             : status_ID,
+                Criticality       : status.criticality,
+                ![@UI.Importance] : #High
             },
             {
-                $Type : 'UI.DataField',
-                Value : quantity,
+                $Type             : 'UI.DataField',
+                Value             : price,
+                ![@UI.Importance] : #High
             },
             {
-                $Type : 'UI.DataField',
-                Value : allowance_ID,
+                $Type             : 'UI.DataField',
+                Value             : allowance_ID,
+                ![@UI.Importance] : #High
+            },
+        ]},
+        FieldGroup #Details            : {Data : [
+            {
+                $Type             : 'UI.DataField',
+                Value             : name,
+                ![@UI.Importance] : #High
             },
             {
-                $Type : 'UI.DataField',
-                Value : price,
+                $Type             : 'UI.DataField',
+                Value             : status_ID,
+                Criticality       : status.criticality,
+                ![@UI.Importance] : #High
             },
-        ], },
-
+            {
+                $Type             : 'UI.DataField',
+                Value             : price,
+                ![@UI.Importance] : #High
+            },
+            {
+                $Type             : 'UI.DataField',
+                Value             : allowance_ID,
+                ![@UI.Importance] : #High
+            },
+        ]},
         FieldGroup #AdministrativeData : {Data : [
             {
                 $Type : 'UI.DataField',
@@ -86,18 +115,30 @@ annotate service.Goods with @(
                 $Type : 'UI.DataField',
                 Value : modifiedAt
             }
-        ]},
+        ]}
     },
-    UI.Facets   : [{
-        $Type  : 'UI.CollectionFacet',
-        ID     : 'POAdmininfo',
-        Label  : '{i18n>adminInfo}',
-        Facets : [{
-            $Type  : 'UI.ReferenceFacet',
-            Label  : '{i18n>admininfo}',
-            Target : '@UI.FieldGroup#AdministrativeData'
-        }]
-    }]
+    UI.Facets : [
+        {
+            $Type  : 'UI.CollectionFacet',
+            ID     : 'PODetails',
+            Label  : '{i18n>driverInfo}',
+            Facets : [{
+                $Type  : 'UI.ReferenceFacet',
+                Label  : '{i18n>driverInfo}',
+                Target : '@UI.FieldGroup#Details'
+            }]
+        },
+        {
+            $Type  : 'UI.CollectionFacet',
+            ID     : 'POAdmininfo',
+            Label  : '{i18n>adminInfo}',
+            Facets : [{
+                $Type  : 'UI.ReferenceFacet',
+                Label  : '{i18n>admininfo}',
+                Target : '@UI.FieldGroup#AdministrativeData'
+            }]
+        }
+    ]
 );
 
 
