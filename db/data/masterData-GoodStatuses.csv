@@ -1,3 +1,5 @@
 ID;name;criticality
 1;On Stock;0
 2;Loaded;3
+3;Rejected;1
+4;Sent to approve;0

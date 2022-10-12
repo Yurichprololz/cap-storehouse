@@ -19,7 +19,7 @@
     "sqlite3": "^5.0.4"
   },
   "scripts": {
-    "dev": "cds watch --profile hybrid",
+    "dev": "cds watch --profile hybrid --port 4005",
     "start": "cds run",
     "watch-ui.loaded.cars": "cds watch --open ui.loaded.cars/webapp/index.html?sap-ui-xx-viewCache=false",
     "undeploy": "cf undeploy cap-storehouse --delete-services --delete-service-keys --delete-service-brokers",
@@ -61,6 +61,12 @@
         "kind": "rest",
         "credentials": {
           "destination": "CPI_DESTINATION"
+        }
+      },
+      "WMF_SHOREHOUSE": {
+        "kind": "rest",
+        "credentials": {
+          "destination": "WMF_SHOREHOUSE"
         }
       },
       "[hybrid]": {

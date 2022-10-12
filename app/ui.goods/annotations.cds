@@ -30,6 +30,11 @@ annotate service.Goods with @(
             },
             {
                 $Type             : 'UI.DataField',
+                Value             : quantity,
+                ![@UI.Importance] : #High
+            },
+            {
+                $Type             : 'UI.DataField',
                 Value             : allowance_ID,
                 ![@UI.Importance] : #High
             },
@@ -71,6 +76,11 @@ annotate service.Goods with @(
             },
             {
                 $Type             : 'UI.DataField',
+                Value             : quantity,
+                ![@UI.Importance] : #High
+            },
+            {
+                $Type             : 'UI.DataField',
                 Value             : allowance_ID,
                 ![@UI.Importance] : #High
             },
@@ -90,6 +100,11 @@ annotate service.Goods with @(
             {
                 $Type             : 'UI.DataField',
                 Value             : price,
+                ![@UI.Importance] : #High
+            },
+            {
+                $Type             : 'UI.DataField',
+                Value             : quantity,
                 ![@UI.Importance] : #High
             },
             {
