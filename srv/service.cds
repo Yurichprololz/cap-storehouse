@@ -1,5 +1,6 @@
 using {storehouse} from '../db/schema';
 using {masterData} from '../db/master-data';
+using {helper} from './helper';
 
 
 service StorehouseService {
@@ -8,29 +9,9 @@ service StorehouseService {
         action sendCar();
     };
 
-    entity Goods as projection on storehouse.Goods actions {
-        @Core.OperationAvailable : in.loadCarEnabled
-        action loadCar(car : UUID @Common.ValueList : {
-            CollectionPath  : 'Cars',
-            Label           : '',
-            Parameters      : [
-                {
-                    $Type             : 'Common.ValueListParameterInOut',
-                    LocalDataProperty : car,
-                    ValueListProperty : 'ID'
-                },
-                {
-                    $Type             : 'Common.ValueListParameterDisplayOnly',
-                    ValueListProperty : 'carName'
-                },
-                {
-                    $Type             : 'Common.ValueListParameterDisplayOnly',
-                    ValueListProperty : 'status_ID'
-                }
-            ],
-            SearchSupported : true
-        }
-        )
+    entity Goods        as projection on storehouse.Goods actions {
+        @Core.OperationAvailable : {$value : in.loadCarEnabled}
+        action loadCar(car : helper.carUUID)
     };
 
     entity Statuses     as projection on masterData.Statuses;
