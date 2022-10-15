@@ -47,7 +47,7 @@
           "icon": "sap-icon://product",
           "indicatorDataSource": {
             "dataSource": "mainService",
-            "path": "/dynamic_dest/cap-logistic-app-srv/storehouse/Goods/$count",
+            "path": "/dynamic_dest/storehouse-app-srv/storehouse/Goods/$count",
             "refresh": 10
           }
         }
