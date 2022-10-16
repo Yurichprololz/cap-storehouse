@@ -32,6 +32,7 @@ async function approveGood(req) {
         ApproveGood: {
           carID: car.ID,
           driverSurname: car.driverSurname,
+          driverRating: car.driverRating,
           carName: car.carName,
           goodID: good.ID,
           goodName: good.name,

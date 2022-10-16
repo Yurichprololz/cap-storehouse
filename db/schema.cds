@@ -10,11 +10,11 @@ using {masterData} from './master-data';
 entity Cars : managed {
     key ID                     : UUID;
         driverSurname          : String;
+        driverRating           : Decimal(2, 1);
         carName                : String;
         status                 : Association to masterData.Statuses;
         good                   : Association to Goods;
         virtual sendCarEnabled : Boolean;
-
 }
 
 entity Goods : managed {
