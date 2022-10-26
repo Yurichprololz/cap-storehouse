@@ -9,6 +9,7 @@ modules:
   requires:
   - name: cap-storehouse-db
   - name: dest_service
+  - name: uaa_cap-storehouse
   provides:
   - name: srv-api
     properties:

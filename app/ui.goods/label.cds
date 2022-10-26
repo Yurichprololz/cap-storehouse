@@ -9,7 +9,7 @@ annotate storehouse.Goods with @title    : '{i18n>goodTitle}' {
     status    @title                  : '{i18n>goodstatus}'
               @Common.Text            : status.name
               @Common.TextArrangement : #TextOnly;
-    allowance @title                  : '{i18n>status}'
+    allowance @title                  : '{i18n>allowance}'
               @Common.Text            : allowance.name
               @Common.TextArrangement : #TextOnly;
     currency  @title                  : '{i18n>currency}'
