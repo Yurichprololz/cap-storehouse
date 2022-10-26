@@ -56,7 +56,7 @@
       "db": {
         "kind": "hana-cloud"
       },
-      "CPIDestination": {
+      "CPI_DESTINATION": {
         "kind": "rest",
         "credentials": {
           "destination": "CPI_DESTINATION"
