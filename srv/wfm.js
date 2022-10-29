@@ -15,11 +15,11 @@ async function approveGood(req) {
     const allowance = await SELECT.one.from(Allowance).where({ ID: good.allowance_ID })
 
     if (car.status_ID === '2') {
-      throw new Error('Error: ' + constants.errors.loadedCar)
+      return req.error(400, constants.errors.loadedCar)
     } else if (good.status_ID === '2') {
-      throw new Error('Error: ' + constants.errors.loadedGood)
+      return req.error(400, constants.errors.loadedGood)
     } else if (good.status_ID === '4') {
-      throw new Error('Error: ' + constants.errors.sendToApprove)
+      return req.error(400, constants.errors.sendToApprove)
     }
 
     const payload = JSON.stringify({

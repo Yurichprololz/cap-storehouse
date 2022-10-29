@@ -14,7 +14,7 @@ module.exports = cds.service.impl(async function () {
     this.before(['CREATE', 'UPDATE'], 'Goods', (req) => {
         const { quantity } = req.data
         if(quantity < 1){
-            throw new Error(constansts.errors.invalidQuantity)
+            return req.error(400, constansts.errors.invalidQuantity)
         }
     });
 
